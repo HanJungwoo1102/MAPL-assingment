@@ -29,14 +29,15 @@ public class BoardManager {
     }
 
     public void shuffle() {
-        for (int i = 0; i < tiles.length; i++) {
-            Tile tempTile = tiles[i];
-
+        for (int i = 0; i < mode * mode * mode * mode * mode; i++) {
             double dValue = Math.random();
-            int iValue = (int)(dValue * mode * mode);
+            int randomTileIndex = (int)(dValue * mode * mode);
 
-            tiles[i] = tiles[iValue];
-            tiles[iValue] = tempTile;
+            int blankTileIndex = getBlankTileIndex();
+
+            if (isMovablePosition(randomTileIndex, blankTileIndex)) {
+                changeTiles(randomTileIndex, blankTileIndex);
+            }
         }
         onChangeBoard.OnSuccessChangeBoard(tiles);
     }
